@@ -1,0 +1,21 @@
+GIT
+  remote: https://github.com/gmontard/waz-storage.git
+  revision: 6591d31a1473a52e18748ced716226ee5b880da9
+  specs:
+    waz-storage (1.1.2)
+      rest-client
+      ruby-hmac
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    mime-types (1.18)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
+    ruby-hmac (0.4.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  waz-storage!
