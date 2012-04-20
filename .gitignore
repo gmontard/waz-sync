@@ -1,3 +1,4 @@
+*.gem
 config.ru
 *.pid
 *.log
