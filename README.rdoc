@@ -2,38 +2,42 @@
 A simple client library aim to sync assets to Windows Azure, using a modified version of the great waz-storage gem
 
 === Install
-Add to your gemfile : gem waz-sync
+Add to your gemfile : 
+
+	gem "waz-storage", :git=>"https://github.com/gmontard/waz-storage.git"
+	gem waz-sync
 
 Create a config file to /app/config/azure.yml to hold your Azure credentials 
 
-development:
-  account_name: NAME
-  access_key: KEY
+	development:
+	  account_name: NAME
+	  access_key: KEY
 
-staging:
-  account_name: NAME
-  access_key: KEY
+	staging:
+	  account_name: NAME
+	  access_key: KEY
       
-production:
-  account_name: NAME
-  access_key: KEY
+	production:
+	  account_name: NAME
+	  access_key: KEY
 
 === Usage
-azure = WazSync.new()
-["images", "javascripts", "stylesheets"].each{|folder|    
-  container = azure.find_or_create_container(folder)    
-  Dir.glob("#{Rails.root.to_s}/public/#{folder}/**/*").each do |file|
-    if File.file?(file)              
-      filename = file.gsub("/public/#{folder}/", "").gsub("#{Rails.root.to_s}", "")
-      azure.send_or_update(container, file, filename)
-    end
-  end
-}
+	azure = WazSync.new()
+	["images", "javascripts", "stylesheets"].each{|folder|    
+	  container = azure.find_or_create_container(folder)    
+	  Dir.glob("#{Rails.root.to_s}/public/#{folder}/**/*").each do |file|
+	    if File.file?(file)              
+	      filename = file.gsub("/public/#{folder}/", "").gsub("#{Rails.root.to_s}", "")
+	      azure.send_or_update(container, file, filename)
+	    end
+	  end
+	}
 
 This simple code will sync all your assets unders "images", "javascripts" and "stylesheets" to Windows Azure CDN
 
 === Remarks
 This Gem use a modified version of the waz-storage gem that you can find there : https://github.com/johnnyhalife/waz-storage
+
 You can find my modified version here : https://github.com/gmontard/waz-storage
 
 === TODO's
@@ -41,7 +45,7 @@ Tests !!!!
 
 === Meta
 
-Written by Guillaume M. and Based on Johnny G. Halife waz-storage gem
+Written by Guillaume Montard
 
 Released under the MIT License: http://www.opensource.org/licenses/mit-license.php
 
