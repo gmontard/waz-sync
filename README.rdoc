@@ -40,6 +40,55 @@ This Gem use a modified version of the waz-storage gem that you can find there :
 
 You can find my modified version here : https://github.com/gmontard/waz-storage
 
+=== Extra
+
+If you also want to automatically sync your assets cached file (javascripts && stylesheets) created using the include rails helper with :cache condition,
+  javascript_include_tag :all, :cache => true
+
+you can take a look at this override lib override file (tested on Rails 2.3.14) :
+
+  #####
+  ## Add this line to your environment.rb file
+  # require 'lib/override_assetfile_cache.rb'
+  ####
+
+  module ActionView
+    module Helpers
+      module AssetTagHelper
+    
+        def write_asset_file_contents(joined_asset_path, asset_paths)
+                
+          FileUtils.mkdir_p(File.dirname(joined_asset_path))
+          File.open(joined_asset_path, "w+") { |cache| cache.write(join_asset_file_contents(asset_paths)) }
+
+          # Set mtime to the latest of the combined files to allow for
+          # consistent ETag without a shared filesystem.
+          mt = asset_paths.map { |p| File.mtime(asset_file_path(p)) }.max
+          File.utime(mt, mt, joined_asset_path)
+
+          ######################
+          ### Azure CDN Sync ###
+          ######################
+        
+          begin
+            azure = WazSync.new()
+            folder = joined_asset_path.match(/^.*public\/([^\/]*)\/(.*)$/)[1]
+            filename = joined_asset_path.match(/^.*public\/([^\/]*)\/(.*)$/)[2]
+            container = azure.find_or_create_container(folder)    
+            azure.send_or_update(container, joined_asset_path, filename)          
+          rescue
+            logger.info("Azure Sync Failed")
+          end
+        
+          ######################
+          
+        end
+      end
+    end
+  end
+
+(https://gist.github.com/2428488)
+
 === TODO's
 Tests !!!!
 
