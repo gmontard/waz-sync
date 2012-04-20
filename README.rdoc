@@ -4,37 +4,34 @@ A simple client library aim to sync assets to Windows Azure, using a modified ve
 === Install
 Add to your gemfile : 
 
-	gem "waz-storage", :git=>"https://github.com/gmontard/waz-storage.git"
-	gem waz-sync
+  gem 'waz-storage', :git=>"https://github.com/gmontard/waz-storage.git"
+  gem 'waz-sync'
 
 Create a config file to /app/config/azure.yml to hold your Azure credentials 
 
-	development:
-  		account_name: NAME
-  		access_key: KEY
+  development:
+    account_name: NAME
+    access_key: KEY
 
-	staging:
-  		account_name: NAME
-  		access_key: KEY
+  staging:
+    account_name: NAME
+    access_key: KEY
       
-	production:
-  		account_name: NAME
-  		access_key: KEY
+  production:
+    account_name: NAME
+    access_key: KEY
 
 === Usage
-
-Code example :
-
-	azure = WazSync.new()
-	["images", "javascripts", "stylesheets"].each{|folder|    
-  		container = azure.find_or_create_container(folder)    
-  		Dir.glob("#{Rails.root.to_s}/public/#{folder}/**/*").each do |file|
-    		if File.file?(file)              
-      			filename = file.gsub("/public/#{folder}/", "").gsub("#{Rails.root.to_s}", "")
-      			azure.send_or_update(container, file, filename)
-    		end
-  		end
-	}
+  azure = WazSync.new()
+  ["images", "javascripts", "stylesheets"].each{|folder|    
+    container = azure.find_or_create_container(folder)    
+    Dir.glob("#{Rails.root.to_s}/public/#{folder}/**/*").each do |file|
+      if File.file?(file)              
+        filename = file.gsub("/public/#{folder}/", "").gsub("#{Rails.root.to_s}", "")
+        azure.send_or_update(container, file, filename)
+      end
+    end
+  }
 
 This simple code will sync all your assets unders "images", "javascripts" and "stylesheets" to Windows Azure CDN
 
