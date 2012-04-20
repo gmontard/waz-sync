@@ -1,4 +1,5 @@
 class WazSync
+    
   require 'waz-blobs'
   
   def initialize
@@ -27,5 +28,3 @@ class WazSync
   end
   
 end
-
-
