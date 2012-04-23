@@ -46,7 +46,7 @@ Then you can use the rake task
 By default it does sync your images, javascripts and stylesheets folders, but you can specify which folder to sync
    rake waz:sync folders=images,foo,bar
 
-=== capistrano recipe
+=== Capistrano recipe
 
 If you use capistrano to deploy you app it's a good idea to sync you assets during each deploy.
 Add this line to your deploy.rb
