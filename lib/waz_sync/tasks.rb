@@ -14,7 +14,7 @@ namespace :waz do
     end
   end
 
-  desc "Sync your assets to Windows Azure, usage : rake waz_sync:sync folders=images,stylesheets,javascripts (you can skip folders arg)"
+  desc "Sync your assets to Windows Azure, usage : rake waz:sync folders=images,stylesheets,javascripts (you can skip folders arg)"
   task :sync => :app_env do
     
     STDOUT.sync = true
