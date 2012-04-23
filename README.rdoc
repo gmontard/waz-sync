@@ -45,7 +45,7 @@ You can find my modified version here : https://github.com/gmontard/waz-storage
 If you also want to automatically sync your assets cached file (javascripts && stylesheets) created using the include rails helper with :cache condition,
   javascript_include_tag :all, :cache => true
 
-you can take a look at this override lib override file (tested on Rails 2.3.14) :
+you can take a look at this override lib file (tested on Rails 2.3.14) :
 
   #####
   ## Add this line to your environment.rb file
