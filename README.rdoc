@@ -35,6 +35,31 @@ Create a config file to /app/config/azure.yml to hold your Azure credentials
 
 This simple code will sync all your assets unders "images", "javascripts" and "stylesheets" to Windows Azure CDN
 
+=== Rake task
+
+There is a rake task included to this Gem. To use it you first have to include this line into your Rakefile
+   require 'waz_sync/tasks'
+
+Then you can use the rake task
+   rake waz:sync
+
+By default it does sync your images, javascripts and stylesheets folders, but you can specify which folder to sync
+   rake waz:sync folders=images,foo,bar
+
+=== capistrano recipe
+
+If you use capistrano to deploy you app it's a good idea to sync you assets during each deploy.
+Add this line to your deploy.rb
+  require "waz_sync/recipes"
+
+Then you can add these callbacks
+   before "deploy:stop",    "waz_sync:sync"
+   before "deploy:start",   "waz_sync:sync"
+   before "deploy:restart", "waz_sync:sync"
+
+There is also a variable :waz_sync_args where you can specify which folder to sync
+  set :waz_sync_args, "images,foo,bar"
+
 === Remarks
 This Gem use a modified version of the waz-storage gem that you can find there : https://github.com/johnnyhalife/waz-storage
 
