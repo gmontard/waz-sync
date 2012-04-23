@@ -21,9 +21,13 @@ Capistrano::Configuration.instance.load do
     def args
       fetch(:waz_sync_args, "")
     end
+    
+    def roles
+      fetch(:delayed_job_server_role, :master)
+    end
 
     desc "Sync your assets to Windows Azure"
-    task :sync, :roles=> [:master] do
+    task :sync, :roles => lambda { roles } do
       run "cd #{current_path};#{rails_env} bundle exec rake waz:sync folders=#{args}"
     end
     
