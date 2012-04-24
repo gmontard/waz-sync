@@ -119,7 +119,7 @@ Tests !!!!
 
 === Meta
 
-Written by Guillaume Montard
+Written by Guillaume Montard for Vodeclic SAS (http://www.vodeclic.com)
 
 Released under the MIT License: http://www.opensource.org/licenses/mit-license.php
 
