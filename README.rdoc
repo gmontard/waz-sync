@@ -102,7 +102,7 @@ you can take a look at this override lib file (tested on Rails 2.3.14) :
             container = azure.find_or_create_container(folder)    
             azure.send_or_update(container, joined_asset_path, filename)          
           rescue
-            logger.info("Azure Sync Failed")
+            Rails.logger.info("Azure Sync Failed")
           end
         
           ######################
