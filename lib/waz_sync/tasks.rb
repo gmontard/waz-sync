@@ -1,3 +1,5 @@
+require 'progressbar'
+
 namespace :waz do
   task :app_env do
     if defined?(RAILS_ROOT)
@@ -30,9 +32,9 @@ namespace :waz do
     azure = WazSync.new()
     
     folders.each{|folder|
-      
-      puts "  ==> Syncing #{folder}"
-      
+            
+      puts("  => Syncing #{folder}")      
+      pbar = ProgressBar.new("     Progress", 100)      
       container = azure.find_or_create_container(folder)    
 
       i = 0
@@ -43,12 +45,13 @@ namespace :waz do
       j = 0
       Dir.glob("#{Rails.root.to_s}/public/#{folder}/**/*").each do |file|
         if File.file?(file)              
-          filename = file.gsub("/public/#{folder}/", "").gsub("#{Rails.root.to_s}", "")
-          print "\r    ==> #{(((j.to_f/i.to_f)*10000).to_i / 100.0).ceil}%"          
+          filename = file.gsub("/public/#{folder}/", "").gsub("#{Rails.root.to_s}", "")          
           azure.send_or_update(container, file, filename)
+          pbar.set((((j.to_f/i.to_f)*10000).to_i / 100.0).ceil)
         end
         j+=1
       end
+      pbar.finish
       print "\n"
     }
     
