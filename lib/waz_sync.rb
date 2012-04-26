@@ -17,13 +17,12 @@ class WazSync
     return(container)
   end
   
-  def send_or_update(container, file, filename)
+  def send_or_update(container, file, filename, options = {:x_ms_blob_cache_control=>"max-age=315360000, public"})
     obj = container[filename] rescue nil
-            
     if !obj || (obj.railsetag != Digest::MD5.hexdigest(File.read(file)))
       Rails.logger.info("Create / Updating : #{filename}")
       content_type = MIME::Types.type_for(file).to_s.blank? ? "text/plain" : MIME::Types.type_for(file).to_s
-      container.store(filename, File.read(file), content_type) rescue 'error'   
+      container.store(filename, File.read(file), content_type, options) rescue 'error'   
     end
   end
   
