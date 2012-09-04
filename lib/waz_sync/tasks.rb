@@ -34,7 +34,7 @@ namespace :waz do
     folders.each{|folder|
             
       puts("\t=> Syncing #{folder}")      
-      pbar = ProgressBar.new("\t   Progress", 100)      
+      pbar = ProgressBar.create("\t   Progress", 100)      
       container = azure.find_or_create_container(folder)    
 
       i = Dir.glob("#{Rails.root.to_s}/public/#{folder}/**/*").size
