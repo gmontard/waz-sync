@@ -1,4 +1,4 @@
-require 'progressbar'
+require 'ruby-progressbar'
 
 namespace :waz do
   task :app_env do
@@ -34,7 +34,7 @@ namespace :waz do
     folders.each{|folder|
             
       puts("\t=> Syncing #{folder}")      
-      pbar = ProgressBar.create("\t   Progress", 100)      
+      pbar = ProgressBar.create(:title => "\t   Progress", :total => 100)      
       container = azure.find_or_create_container(folder)    
 
       i = Dir.glob("#{Rails.root.to_s}/public/#{folder}/**/*").size
@@ -43,7 +43,7 @@ namespace :waz do
         if File.file?(file)              
           filename = file.gsub("/public/#{folder}/", "").gsub("#{Rails.root.to_s}", "")          
           azure.send_or_update(container, file, filename)
-          pbar.set((((j.to_f/i.to_f)*10000).to_i / 100.0).ceil)
+          pbar.progress = ((((j.to_f/i.to_f)*10000).to_i / 100.0).ceil)
         end
       end
       pbar.finish
